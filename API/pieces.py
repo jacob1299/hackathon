@@ -6,12 +6,12 @@ class Piece:
         self.color = color
     def generate_moves(self, deltas: list[int], position: list[int]) -> list[list[int]]:
         pos_moves = []
-        x0, y0 = position
-        for dx,dy in deltas:
+        y0, x0 = position
+        for dy,dx in deltas:
             x1 = x0 + dx
             y1 = y0 + dy
             if inBoard(x1,y1):
-                pos_moves.append(x1,y1)
+                pos_moves.append([x1,y1])
         return pos_moves
 
     def __str__(self) -> str:

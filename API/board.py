@@ -36,28 +36,33 @@ class Board:
             black_second.append(animal)
 
 
-        self.b[5] = [reversed(black_edge)]
-        self.b[4] = [reversed(black_second)]
+        self.b[5] = list(reversed(black_edge))
+        self.b[4] = list(reversed(black_second))
 
     def get_moves(self, position: list[int]):
-        x,y = position
-        if (type(self.b[x,y]) is not Piece):
+        y,x = position
+        if (not issubclass(type(self.b[x][y]), Piece)):
+            print(f"Was {type(self.b[x][y])}, not Piece")
             return None
-        animal = self.b[x,y]
+        animal = self.b[x][y]
         pos_moves = animal.generate_moves(position)
         actual_moves = []
         for move in pos_moves:
-            x0,y0 = move
-            if animal.color is not self.b[x0,y0]:
+            y0,x0 = move
+            if (self.b[x0][y0] and animal.color == self.b[x0][y0].color ):
+                print(f"animal: {animal.color}, other: {self.b[x0][y0].color}")
+            else:
+                # print(f"animal: {animal.color}, other: {self.b[x0][y0].color}")
                 actual_moves.append(move)
+                
         return actual_moves
 
     def make_move(self, origin: list[int], destination) -> bool:
         if (destination in self.get_moves(origin)):
-            x0,y0 = origin
-            x1,y1 = destination
-            self.b[x1,y1] = self.b[x0,y0] 
-            self.b[x0,y0] = None
+            y0,x0 = origin
+            y1,x1 = destination
+            self.b[x1][y1] = self.b[x0][y0] 
+            self.b[x0][y0] = None
             return True
         else:
             print("INVALID MOVE")
@@ -79,6 +84,13 @@ def main():
     b = Board()
     b.make_default_board()
     print(b)
+
+    origin = [0,1]
+    moves = b.get_moves(origin)
+    print(moves)
+    b.make_move(origin, moves[0])
+    print(b)
+
 
 if __name__ == "__main__":
     main()
