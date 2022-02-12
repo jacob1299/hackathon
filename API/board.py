@@ -11,21 +11,33 @@ class Board:
         return out
 
     def make_white_side(self, edge_row: list[Piece], second_row: list[Piece]):
+        white_edge = []
         for animal in edge_row:
             animal.color = "W"
+            white_edge.append(animal)
+
+        white_second = []
         for animal in second_row:
             animal.color = "W"
+            white_second.append(animal)
 
-        self.b[0] = edge_row
-        self.b[1] = second_row
+        self.b[0] = white_edge
+        self.b[1] = white_second
+
     def make_black_side(self, edge_row: list[Piece], second_row: list[Piece]):
+        black_edge = []
         for animal in edge_row:
             animal.color = "B"
+            black_edge.append(animal)
+
+        black_second = []
         for animal in second_row:
             animal.color = "B"
+            black_second.append(animal)
 
-        self.b[5] = reversed(edge_row)
-        self.b[4] = reversed(second_row)
+
+        self.b[5] = [reversed(black_edge)]
+        self.b[4] = [reversed(black_second)]
 
     def get_moves(self, position: list[int]):
         x,y = position
@@ -58,7 +70,10 @@ class Board:
         edge_row = [S(), S(), S(), L(), S(), S()]
         second_row = [S(), S(), S(), S(), S(), S()]
         self.make_white_side(edge_row, second_row)
-        self.make_black_side(edge_row, second_row)
+        
+        edge_row2 = [S(), S(), S(), L(), S(), S()]
+        second_row2 = [S(), S(), S(), S(), S(), S()]
+        self.make_black_side(edge_row2, second_row2)
 
 def main():
     b = Board()
