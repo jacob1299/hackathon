@@ -16,7 +16,7 @@ def game():
 	try:
 		g = Game.games[request.args.get("id")]
 		print(f"{g.players[0]}    {g.players[1]}")
-		print(f"{request.args.get("user")}")
+		print(f'{request.args.get("user")}')
 		return render_template("main.html", color="white", id=request.args.get("id"))
 	except:
 
