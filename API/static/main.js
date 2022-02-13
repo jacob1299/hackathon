@@ -81,10 +81,11 @@ const readBoard = function() {
 	const out = {
 		id: game_id,
 		player: color,
+		"a1": document.querySelector("#row1 [data-col='a']").getAttribute("data-piece"),
 	}
 	["1", "2"].forEach(r => {
 		["a", "b", "c", "d", "e", "f"].forEach(c => {
-			out[c+r] = document.querySelector(`#row${r}[data-col="${c}"]`).getAttribute("data-piece");
+			out[c+r] = document.querySelector(`#row${r} [data-col="${c}"]`).getAttribute("data-piece");
 		});
 	});
 	console.log(out);
