@@ -22,12 +22,12 @@ def gamestatus():
 		result[game] = Game.getGameBoard(game).state + ", " + Game.getGameBoard(game).turn
 	return result
 
-@app.route('/make_game', methods = ['GET'])
+@app.route('/make_game', methods = ['POST'])
 def makegame():
 	g = Game()
 	return {"id" : g.name}
 
-@app.route('/setup_state', methods = ['GET'])
+@app.route('/setup_state', methods = ['POST'])
 def setup_state():
 	data = dict(request.values)
 	if len(data) != 2:
@@ -38,7 +38,7 @@ def setup_state():
 	return {"ready":result}
 
 
-@app.route('/set_pieces', methods = ['GET'])
+@app.route('/set_pieces', methods = ['POST'])
 def set_pieces():
 	data = dict(request.values)
 	if len(data) != 14:
