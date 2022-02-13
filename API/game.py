@@ -9,15 +9,17 @@ def rand_name():
 class Game:
 	games = dict()
 
-	def getGameBoard(id) -> Board:
+	def getGameBoard(id):
 		return Game.games[id].board
 
-	def __init__(self):
+	def __init__(self, color, ante, user):
 		instr = rand_name()
 		# makes sure that name is unique
 		while instr in Game.games:
 			instr = rand_name()
 
-		self.name = instr
+		self.id = instr
 		self.board = Board()
-		Game.games[self.name] = self
+		self.ante = ante
+		self.players = [user, ""] if color=="white" else ["", user]
+		Game.games[self.id] = self
