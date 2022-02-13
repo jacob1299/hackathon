@@ -59,7 +59,7 @@ class Board:
 		else:
 			return False
 
-	def set_pieces(self, data: dict[str: str], color: str):
+	def set_pieces(self, data, color):
 		if self.state != DRAFT:
 			raise NotImplementedError
 		columns = range(1,3) if color == "white" else range(5,7)
