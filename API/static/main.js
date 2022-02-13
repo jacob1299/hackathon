@@ -20,6 +20,20 @@ const render = function() {
 	const toPlaceHTML = ["turtle", "bee", "bee", "rabbit", "rabbit", "mouse"].map(a => `<div class="square" data-piece="%color%-${a}" onclick="%onclick%"></div>`).join("");
 	document.querySelector("#self > .piece-pane").innerHTML = toPlaceHTML.replaceAll("%color%", color).replaceAll("%onclick%", "unplaced_piece_click(this);");
 	document.querySelector("#enemy > .piece-pane").innerHTML = toPlaceHTML.replaceAll("%color%", color === "white" ? "black" : "white").replaceAll("%onclick%", "");
+	if (color === "black") {
+		cur_repeater = setInterval(() => {
+			console.log("pinging backend");
+			getData("setup_state", {player:color, id:game_id}).then(data => {
+				if (data.ready) {
+					console.log("Your turn again");
+					clearInterval(cur_repeater);
+					cur_repeater = undefined;
+					myTurn = true;
+					remaining_actions = 8;
+				}
+			});
+		}, 500);
+	}
 }
 
 const upgradeLookup = {
