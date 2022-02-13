@@ -91,7 +91,7 @@ const action = function(elem) {
 	remaining_actions -= 1;
 	if (remaining_actions === 0) {
 		document.querySelector("#upgrade").setAttribute("style", `display: none;`);
-		document.querySelector(".selected").classList.remove("selected");
+		document.querySelectorAll(".selected").forEach(e => e.classList.remove("selected"));	//only one but maybe zero
 		postData("set_pieces", readBoard()).then(d => {
 			myTurn = false;
 			console.log(d);
