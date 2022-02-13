@@ -74,8 +74,21 @@ const action = function(elem) {
 	if (remaining_actions === 0) {
 		document.querySelector("#upgrade").setAttribute("style", `display: none;`);
 		document.querySelector(".selected").classList.remove("selected");
-
+		postData("set_pieces", readBoard()).then();
 	}
+}
+const readBoard = function() {
+	const out = {
+		id: game_id,
+		player: color,
+	}
+	["1", "2"].forEach(r => {
+		["a", "b", "c", "d", "e", "f"].forEach(c => {
+			out[c+r] = document.querySelector(`#row${r}[data-col="${c}"]`).getAttribute("data-piece");
+		});
+	});
+	console.log(out);
+	return out;
 }
 const wait_for_response = function() {
 
