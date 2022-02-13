@@ -19,7 +19,7 @@ def game():
 		print(f'{request.args.get("user")}')
 		return render_template("main.html", color="white", id=request.args.get("id"))
 	except:
-
+		return {"bad_id": request.args.get("id")}
 
 @app.route("/games_status")
 def gamestatus():
