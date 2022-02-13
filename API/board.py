@@ -28,7 +28,7 @@ class Board:
 			EMPTY | ALLY: blank_squares.union(ally_squares),
 			EMPTY | ENEMY: blank_squares.union(enemy_squares),
 			ALLY | ENEMY: ally_squares.union(enemy_squares),
-			EMPTY | ALLY | ENEMY: ally_squares.union(enemy_squares).union(empty_squares)
+			EMPTY | ALLY | ENEMY: ally_squares.union(enemy_squares).union(blank_squares)
 		}
 		moves = []
 		for square in SQUARES:
