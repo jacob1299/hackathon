@@ -92,6 +92,11 @@ class Squirrel(Piece):
 	def generate_moves(self, moves, current_square, squares):
 		# get possible take moves using Piece method
 		self.deltas  = []
+
+		if current_square[1] != "2" and current_square[1] != "5":
+			self.targets.append((UP if self.color == "white" else DOWN, EMPTY))
+		else:
+			self.targets = [(UPLEFT if self.color == "white" else DOWNLEFT, ENEMY), (UPRIGHT if self.color == "white" else DOWNRIGHT, ENEMY)]
 		super().generate_moves(moves, current_square, squares)
 
 		# If we are on the starting position
