@@ -1,41 +1,56 @@
+from constants import *
+
+def UP(instr):
+	return None if instr is None or instr[1]=="6" else instr[0]+str(int(instr[1])+1)
+def DOWN(instr):
+	return None if instr is None or instr[1]=="1" else instr[0]+str(int(instr[1])-1)
+def LEFT(instr):
+	return None if instr is None or instr[0]=="a" else chr(ord(instr[0])-1)+instr[1]
+def RIGHT(instr):
+	return None if instr is None or instr[0]=="f" else chr(ord(instr[0])+1)+instr[1]
+def UPLEFT(instr):
+	return UP(LEFT(instr))
+def UPRIGHT(instr):
+	return UP(RIGHT(instr))
+def DOWNLEFT(instr):
+	return DOWN(LEFT(instr))
+def DOWNRIGHT(instr):
+	return DOWN(RIGHT(instr))
+
+def MOVE(current_square, target_square):
+	return {"from": current_square, "to": target_square}
+
 class Piece:
-    def __init__(self, name, color):
-        # name of piece 
-        self.name = name
-        # black or white 
-        self.color = color
-    def generate_moves(self, deltas: list[int], position: list[int]) -> list[list[int]]:
-        pos_moves = []
-        y0, x0 = position
-        for dy,dx in deltas:
-            x1 = x0 + dx
-            y1 = y0 + dy
-            if inBoard(x1,y1):
-                pos_moves.append([x1,y1])
-        return pos_moves
+	def __init__(self, name, color):
+		# name of piece 
+		self.name = name
+		# black or white 
+		self.color = color
 
-    def __str__(self) -> str:
-        return self.name[:4] + ": " + self.color
+	#default move handling.  For custom move handling for a piece, override this function
+	def generate_moves(self, moves, current_square, squares):
+		for target in self.targets:	#target = [function, square_type]
+			if target[0](current_square) in squares[target[1]]:
+				moves.append(MOVE(current_square, target_square))
+		for delta in self.deltas:	#delta = [function, limit]
+			sqr = delta[0](current_square)
+			i=1
+			while sqr is not None and sqr in squares[EMPTY] and i<=limit:
+				moves.append(MOVE(current_square, sqr))
+				sqr = delta[0](sqr)
+				i += 1
+			if sqr in squares[ENEMY] and i<=limit:
+				moves.append(MOVE(current_square, sqr))
 
-class Squirrel(Piece):
-    def __init__(self, color=None):
-        super().__init__('Squirrel', color)
-    def generate_moves(self, position: list[int]):
-        deltas = [[0, 1], [0, 2]]
-        return super().generate_moves(deltas, position)
-        
-    def __str__(self) -> str:
-        return super().__str__()
 
-class Lion(Piece):
-    def __init__(self, color=None):
-        super().__init__('Lion', color)
-    def generate_moves(self, position: list[int]):
-        deltas = [[1,0],[-1,0],[0,1],[0,-1]]
-        return super().generate_moves(deltas, position)
+	def __str__(self) -> str:
+		return self.name[:4] + ": " + self.color
 
-    def __str__(self) -> str:
-        return super().__str__()
+class Ant(Piece):
+	def __init__(self, color):
+		super.__init__("Ant", color)
+		self.targets = [(UP if color == "white" else DOWN, EMPTY), (UPLEFT if color == "white" else DOWNLEFT, ENEMY), (UPRIGHT if color == "white" else DOWNRIGHT, ENEMY)]
+		self.deltas  = []
 
 def inBoard(x,y):
-    return 0 <= x <= 5 and 0 <= y <= 5
+	return 0 <= x <= 5 and 0 <= y <= 5
