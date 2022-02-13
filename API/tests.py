@@ -1,4 +1,3 @@
-from ast import While
 from constants import *
 from pieces import *
 from board import *
@@ -17,6 +16,46 @@ class TestMoveArounds(unittest.TestCase):
 		self.assertTrue(all(DOWN(c+"1") is None for c in "abcdef"))
 		self.assertTrue(all(LEFT("a"+r) is None for r in "123456"))
 		self.assertTrue(all(RIGHT("f"+r) is None for r in "123456"))
+
+class TestMovePieces(unittest.TestCase):
+	def setUp(self) -> None:
+		self.board = Board()
+		self.board.state = PLAYING
+
+	def test_ant_move(self):
+		self.board.make_move('a2', 'a3')
+		self.assertEqual(self.board.b['a2'], None)
+		self.assertEqual(type(self.board.b['a3']),Ant)
+	def test_ant_bad_move(self):
+		self.board.make_move('a2', 'a4')
+		self.assertEqual(type(self.board.b['a2']),Ant)
+		self.assertEqual(self.board.b['a4'], None)
+
+	def test_monkey_friendly_move(self):
+		self.board.b['a1'] = Monkey('white')
+		self.assertTrue(self.board.make_move('a1', 'a2'))
+		self.assertEqual(type(self.board.b['a2']),Monkey)
+		self.assertEqual(type(self.board.b['a1']),Ant)
+
+	def test_monkey_enemy_move(self):
+		self.board.b['a6'] = Monkey('white')
+		self.assertTrue(self.board.make_move('a6', 'a5'))
+		self.assertEqual(type(self.board.b['a5']),Monkey)
+		self.assertEqual(self.board.b['a6'], None)
+
+	def test_bee_enemy_move(self):
+		self.board.b['a6'] = Bee('white')
+		self.assertTrue(self.board.make_move('a6', 'a5'))
+		self.assertEqual(self.board.b['a5'], None)
+		self.assertEqual(self.board.b['a6'], None)
+
+	def test_bee_blank_move(self):
+		self.board.b['a4'] = Bee('white')
+		self.assertTrue(self.board.make_move('a4', 'a3'))
+		self.assertEqual(self.board.b['a4'], None)
+		self.assertEqual(type(self.board.b['a3']),Bee)
+
+
 
 class TestPieces(unittest.TestCase):
 	def setUp(self) -> None:

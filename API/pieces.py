@@ -53,7 +53,7 @@ def MOVE(current_square, target_square):
 	return {"from": current_square, "to": target_square}
 
 class Piece:
-	def __init__(self, name, color):
+	def __init__(self, name: str, color: str):
 		# name of piece 
 		self.name = name
 		# black or white 
@@ -76,7 +76,7 @@ class Piece:
 
 
 	def __str__(self) -> str:
-		return self.name[:4] + ": " + self.color
+		return self.color + "-" + self.name.lower()
 
 class Ant(Piece):
 	def __init__(self, color):
@@ -196,3 +196,22 @@ class Kangaroo(Piece):
             (UPLEFT, EMPTY | ENEMY),(DOWNLEFT, EMPTY | ENEMY),(UPRIGHT, EMPTY | ENEMY),(DOWNRIGHT, EMPTY | ENEMY),
             (UUR, EMPTY | ENEMY), (UUL, EMPTY | ENEMY), (URR, EMPTY | ENEMY), (ULL, EMPTY | ENEMY), (DDR, EMPTY | ENEMY), (DDL, EMPTY | ENEMY), (DRR, EMPTY | ENEMY), (DLL, EMPTY | ENEMY)]
         self.deltas = []
+
+def parseName(name: str):
+	return {
+		'ant' : Ant,
+		'squrrel' : Squirrel,
+		'swan' : Swan,
+		'turtle' : Turtle,
+		'monkey' : Monkey,
+		'lion' : Lion,
+		'bee' : Bee,
+		'fox' : Fox,
+		'tiger' : Tiger,
+		'rabbit' : Rabbit,
+		'hyena' : Hyena,
+		'tiger' : Tiger,
+		'mouse' : Mouse,
+		'shark' : Shark,
+		'kangaroo' : Kangaroo
+	}[name.lower()]
