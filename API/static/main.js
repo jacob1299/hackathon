@@ -83,8 +83,10 @@ const readBoard = function() {
 		player: color,
 		"a1": document.querySelector("#row1 [data-col='a']").getAttribute("data-piece"),
 	}
-	["1", "2"].forEach(r => {
-		["a", "b", "c", "d", "e", "f"].forEach(c => {
+	const rows = ["1", "2"];
+	const cols = ["a", "b", "c", "d", "e", "f"];
+	rows.forEach(r => {
+		cols.forEach(c => {
 			out[c+r] = document.querySelector(`#row${r} [data-col="${c}"]`).getAttribute("data-piece");
 		});
 	});
