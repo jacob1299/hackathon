@@ -14,7 +14,7 @@ export const Nav = ({text: NavProps}: NavProps): JSX.Element => {
         <Flex as='header' w='100vw' h='50px' position='fixed'>
             <LogoutButton ml='2'/>
             <Spacer />
-            <p style={{margin: '4px'}}> {user?.nickname}</p>
+            <p style={{margin: '8px', fontWeight: 'bold'}}> {user?.nickname}</p>
         </Flex>
     )
 }

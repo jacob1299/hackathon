@@ -66,7 +66,9 @@ async function getData(endpoint, data) {
 	return response.json();
 }
 async function postData(endpoint, data) {
-	const response = await fetch(`http://34.75.42.233:5000/${endpoint}?${Object.keys(data).map(k => `${k}=${data[k]}`).join("&")}`, {
+	const url = `http://34.75.42.233:5000/${endpoint}?${Object.keys(data).map(k => `${k}=${data[k]}`).join("&")}`;
+	console.log(url);
+	const response = await fetch(url, {
 		method: "POST",
 	});
 	return response.json();
@@ -115,7 +117,7 @@ const readBoard = function() {
 	const cols = ["a", "b", "c", "d", "e", "f"];
 	rows.forEach(r => {
 		cols.forEach(c => {
-			out[c+r] = document.querySelector(`#row${r} [data-col="${c}"]`).getAttribute("data-piece");
+			out[c+r] = document.querySelector(`#row${r} [data-col="${c}"]`).getAttribute("data-piece").replace(/.{5}-/,"");
 		});
 	});
 	return out;
