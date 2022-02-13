@@ -13,6 +13,8 @@ def hello():
 
 @app.route("/game")
 def game():
+	g = Game("white", "none", "david") if request.args.get("id") == "test" else Game.games[request.args.get("id")]
+	print(request.args.get("not there"))
 	return render_template("main.html", color="white", id=request.args.get("id"))
 
 @app.route("/games_status")
