@@ -1,3 +1,4 @@
+from ast import While
 from constants import *
 from pieces import *
 from board import *
@@ -31,6 +32,29 @@ class TestPieces(unittest.TestCase):
 		board.b["c2"] = Ant("white")
 		board.b["c3"] = Ant("white")
 		self.assertEqual(len(self.board.get_moves()), 1)
+	
+	def test_ant3(self):
+		board = self.board
+		board.b["c2"] = Ant("white")
+		board.b["d3"] = Ant("black")
+		self.assertEqual(len(self.board.get_moves()), 2)
+
+	def test_swan1(self):
+		board = self.board
+		board.b["c2"] = Swan("white")
+		self.assertEqual(len(self.board.get_moves()), 4)
+
+	def test_swan2(self):
+		board = self.board
+		board.b["c3"] = Swan("white")
+		self.assertEqual(len(self.board.get_moves()), 3)
+	
+	## arguably this should be 3, but swans can jump because they're upgraded
+	def test_swan3(self):
+		board = self.board
+		board.b["c2"] = Swan("white")
+		board.b["c3"] = Ant("black")
+		self.assertEqual(len(self.board.get_moves()), 4)
 
 	def test_turtle(self):
 		board = self.board
@@ -78,11 +102,6 @@ class TestPieces(unittest.TestCase):
 		self.assertEqual(len(board.get_moves()), 2)
 
 	def test_bee(self):
-		# board = self.board
-		# board.b["b2"] = Squirrel("white") #one forward, one take
-		# board.b["c3"] = Ant("black") 
-		# board.b["b4"] = Ant("black")
-		# self.assertEqual(len(board.get_moves()), 2)
 		board = self.board
 		board.b["c4"] = Bee("white")
 		board.b["c5"] = Bee("white")

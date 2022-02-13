@@ -110,6 +110,23 @@ class Squirrel(Piece):
 					sqr = delta[0](sqr)
 					i += 1
 
+class Swan(Piece):
+	def __init__(self, color):
+		super().__init__("Swan", color)
+		self.targets = [(UP if color == "white" else DOWN, EMPTY | ENEMY),(UPLEFT if color == "white" else DOWNLEFT, EMPTY | ENEMY),(UPRIGHT if color == "white" else DOWNRIGHT, EMPTY | ENEMY)]
+		self.deltas  = []
+	def generate_moves(self, moves, current_square, squares):
+		color = self.color
+		self.targets = [(UP if color == "white" else DOWN, EMPTY | ENEMY),(UPLEFT if color == "white" else DOWNLEFT, EMPTY | ENEMY),(UPRIGHT if color == "white" else DOWNRIGHT, EMPTY | ENEMY)]
+
+		# If we are on the starting position, allow taking up to 2 ahead
+		if self.color == "white" and current_square[1] == "2":
+			self.targets.append((UP2, EMPTY | ENEMY))
+		elif self.color == "black" and current_square[1] == "5":
+			self.targets.append((DOWN2, EMPTY | ENEMY))
+		super().generate_moves(moves, current_square, squares)
+
+
 class Turtle(Piece):
 	def __init__(self, color):
 		super().__init__("Turtle", color)
