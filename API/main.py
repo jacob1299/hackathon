@@ -15,9 +15,8 @@ def hello():
 def game():
 	try:
 		g = Game.games[request.args.get("id")]
-		print(f"{g.players[0]}    {g.players[1]}")
-		print(f'{request.args.get("user")}')
-		return render_template("main.html", color="white", id=request.args.get("id"))
+		isWhite = (request.args.get("user") and g.players[0]) or (not request.args.get("user") and not g.players[0])
+		return render_template("main.html", color="white" if isWhite else "black", id=request.args.get("id"))
 	except:
 		return {"bad_id": request.args.get("id")}
 
