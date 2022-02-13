@@ -25,6 +25,7 @@ const render = function() {
 			getData("setup_state", {player:color, id:game_id}).then(data => {
 				console.log(`My turn: ${data.ready}`)
 				if (data.ready === "True") {
+					update_board(data);
 					clearInterval(cur_repeater);
 					cur_repeater = undefined;
 					myTurn = true;
@@ -73,6 +74,21 @@ async function postData(endpoint, data) {
 	});
 	return response.json();
 }
+const get_div = function(square) {
+	return document.querySelector(`#row${square[1]} > [data-col="${square[0]}"]`);
+}
+const get_coords = function(elem) {
+	return elem.getAttribute("data-col") + elem.parentElement.id.substring(3);
+}
+const update_board = function(data) {
+	const rows = ["1", "2", "3", "4", "5", "6"];
+	const cols = ["a", "b", "c", "d", "e", "f"];
+	rows.forEach(r => {
+		cols.forEach(c => {
+			get_div(c+r).setAttribute("data-piece", data[c+r]);
+		});
+	});
+}
 
 let cur_selected = undefined;
 let backrank = undefined;
@@ -99,6 +115,7 @@ const action = function(elem) {
 				getData("setup_state", {player:color, id:game_id}).then(data => {
 					console.log(`My turn: ${data.ready}`)
 					if (data.ready === "True") {
+						update_board(data);
 						clearInterval(cur_repeater);
 						cur_repeater = undefined;
 						myTurn = true;
@@ -170,7 +187,63 @@ const empty_square_click = function(elem) {
 }
 
 
-
+let moves = undefined;
 const initGame = function() {
 	console.log("game start");
+	cur_selected = undefined;
+	const rows = ["1", "2", "3", "4", "5", "6"];
+	const cols = ["a", "b", "c", "d", "e", "f"];
+	rows.forEach(r => {
+		cols.forEach(c => {
+			get_div(c+r).setAttribute("onclick", "gameClick(this);");
+		});
+	});
+	cur_repeater = setInterval(waitTurn, 1000);
+}
+const waitTurn = function() {
+	getData("my_move", {
+		id: game_id,
+		player: color,
+	}).then(data => {
+		console.log(`My game turn: ${data.turn}`)
+		if (data.turn == "True") {
+			clearInterval(cur_repeater);
+			moves = data.moves;
+			myTurn = true;
+			update_board(data.board);
+		}
+	});
+}
+const gameClick = function(elem) {
+	if (myTurn) {
+		if (cur_selected && cur_selected == elem) {	//click piece again, deselect
+			cur_selected = undefined;
+			elem.classList.remove("selected");
+			remove_highlights();
+		}
+		else if (elem.classList.contains("highlight")) {	//make a move
+			postData("move", {
+				id: game_id,
+				from: get_coords(cur_selected),
+				to: get_cords(elem),
+			}).then(data => {
+				moves = undefined;
+				myTurn = false;
+				cur_selected.classList.remove("selected");
+				cur_selected = undefined;
+				remove_highlights();
+				cur_repeater = setInterval(waitTurn, 1000);
+			})
+		}
+		else if (elem.getAttribute("data-piece").includes(color)) {	//select piece
+			select(elem);
+			highlight_moves(elem);
+		}
+	}
+}
+const highlight_moves = function(elem) {
+	moves.filter(m => m.from == get_coords(elem)).forEach(m => get_div(m.to).classList.add("highlight"));
+}
+const remove_highlights = function() {
+	document.querySelectorAll(".row > .square").forEach(e => e.classList.remove("highlight"));
 }

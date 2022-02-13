@@ -73,7 +73,13 @@ def make_move():
 	else:
 		return {"Success": "False, cannot move"}
 		
-
+@app.route('/my_move', methods = ["GET"])
+def my_move():
+	curr_board = Game.getGameBoard(request.args.get("id"))
+	if curr_board.turn == request.args.get("player"):
+		return {"turn": "True", "moves": curr_board.get_moves(), "board": curr_board.for_json()}
+	else:
+		return {"turn": "False"}
 
 @app.route('/set_pieces', methods = ['POST'])
 def set_pieces():
