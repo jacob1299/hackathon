@@ -62,8 +62,8 @@ if __name__ == "__main__":
 	board.b["b2"] = Squirrel("white") #one forward, one take
 	board.b["c3"] = Ant("black") 
 	board.b["b3"] = Ant("black")
-	assert len(board.get_moves()) == 3
-	# print (board.get_moves())
+	print (board.get_moves())
+	assert len(board.get_moves()) == 2
 
 
 	print("All tests passed")
