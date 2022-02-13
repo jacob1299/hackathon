@@ -39,7 +39,7 @@ def setup_state():
 		return {"Success": "False"}
 	id, player = data['id'], data['player']
 	curr_board = Game.getGameBoard(id)
-	if result == curr_board.turn == player:
+	curr_board.turn == player:
 		out = curr_board.for_json()
 		out["ready"] = "True"
 		return out
