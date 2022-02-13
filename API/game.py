@@ -23,3 +23,6 @@ class Game:
 		self.ante = ante
 		self.players = [user, ""] if color=="white" else ["", user]
 		Game.games[self.id] = self
+
+	def get_link(self):
+		return f"ecochess.com:5000/game&id={self.id}"
