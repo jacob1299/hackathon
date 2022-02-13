@@ -15,6 +15,6 @@ def board():
 
 @app.route("/game")
 def game():
-	return render_template("main.html")
+	return render_template("main.html", color="black")
 
 app.run(host='0.0.0.0')
