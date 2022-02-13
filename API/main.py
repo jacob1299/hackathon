@@ -24,8 +24,8 @@ def gamestatus():
 
 @app.route('/make_game', methods = ['POST'])
 def makegame():
-	g = Game()
-	return {"id" : g.name}
+	g = Game(request.args.get("color"), request.args.get("ante"), request.args.get("user"))
+	return {"link" : g.get_link()}
 
 @app.route('/setup_state', methods = ['GET'])
 def setup_state():
