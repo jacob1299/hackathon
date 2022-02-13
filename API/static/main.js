@@ -117,7 +117,7 @@ const readBoard = function() {
 	const cols = ["a", "b", "c", "d", "e", "f"];
 	rows.forEach(r => {
 		cols.forEach(c => {
-			out[c+r] = document.querySelector(`#row${r} [data-col="${c}"]`).getAttribute("data-piece");
+			out[c+r] = document.querySelector(`#row${r} [data-col="${c}"]`).getAttribute("data-piece").replace(/.{5}-/,"");
 		});
 	});
 	return out;
