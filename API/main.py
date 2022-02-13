@@ -37,6 +37,16 @@ def setup_state():
 	result = "True" if curr_board.turn == player else "False"
 	return {"ready":result}
 
+@app.route('/board', methods=['GET'])
+def getboard():
+	data = dict(request.values)
+	if len(data) != 1:
+		return {"Success": "False"}
+	id = data['id']
+	curr_board = Game.getGameBoard(id)
+	return curr_board.for_json()
+
+
 @app.route('/move', methods=['POST'])
 def make_move():
 	data = dict(request.values)
