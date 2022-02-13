@@ -52,5 +52,25 @@ class Ant(Piece):
 		self.targets = [(UP if color == "white" else DOWN, EMPTY), (UPLEFT if color == "white" else DOWNLEFT, ENEMY), (UPRIGHT if color == "white" else DOWNRIGHT, ENEMY)]
 		self.deltas  = []
 
+class Turtle(Piece):
+	def __init__(self, color):
+		super().__init__("Turtle", color)
+		self.targets = [(UP, EMPTY | ENEMY),(DOWN, EMPTY | ENEMY),(LEFT, EMPTY | ENEMY),(RIGHT, EMPTY | ENEMY), 
+			(UPLEFT, EMPTY | ENEMY),(DOWNLEFT, EMPTY | ENEMY),(UPRIGHT, EMPTY | ENEMY),(DOWNRIGHT, EMPTY | ENEMY)]
+		self.deltas  = []
+
+class Monkey(Piece):
+	def __init__(self, color):
+		super().__init__("Monkey", color)
+		self.targets = [(UP, EMPTY | ENEMY | ALLY),(DOWN, EMPTY | ENEMY | ALLY),(LEFT, EMPTY | ENEMY | ALLY),(RIGHT, EMPTY | ENEMY | ALLY), 
+			(UPLEFT, EMPTY | ENEMY | ALLY),(DOWNLEFT, EMPTY | ENEMY | ALLY),(UPRIGHT, EMPTY | ENEMY | ALLY),(DOWNRIGHT, EMPTY | ENEMY | ALLY)]
+		self.deltas  = []
+
+class Lion(Piece):
+	def __init__(self, color):
+		super().__init__("Monkey", color)
+		self.targets = []
+		self.deltas  = [(UP, 2), (DOWN,2), (LEFT, 2), (RIGHT, 2), (UPRIGHT, 2), (DOWNLEFT,2), (UPLEFT, 2), (DOWNRIGHT, 2)]
+
 def inBoard(x,y):
 	return 0 <= x <= 5 and 0 <= y <= 5
