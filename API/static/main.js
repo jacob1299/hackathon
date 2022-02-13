@@ -45,13 +45,13 @@ const upgradeLookup = {
 	"white-shark": "white-kangaroo",
 };
 async function getData(endpoint, data) {
-	const response = await fetch(`http://ecochess.tech:5000/${endpoint}?${Object.keys(data).map(k => `${k}=${data[k]}`).join("&")}`, {
+	const response = await fetch(`http://34.75.42.233:5000/${endpoint}?${Object.keys(data).map(k => `${k}=${data[k]}`).join("&")}`, {
 		method: "GET",
 	});
 	return response.json();
 }
 async function postData(endpoint, data) {
-	const response = await fetch(`http://ecochess.tech:5000/${endpoint}?${Object.keys(data).map(k => `${k}=${data[k]}`).join("&")}`, {
+	const response = await fetch(`http://34.75.42.233:5000/${endpoint}?${Object.keys(data).map(k => `${k}=${data[k]}`).join("&")}`, {
 		method: "POST",
 	});
 	return response.json();
@@ -62,6 +62,7 @@ let backrank = undefined;
 let myTurn = color === "white";
 let remaining_upgrades = 6;
 let remaining_actions  = myTurn ? 4 : 0;
+let cur_repeater = undefined;
 
 const select = function(elem) {
 	if (cur_selected)
@@ -74,14 +75,26 @@ const action = function(elem) {
 	if (remaining_actions === 0) {
 		document.querySelector("#upgrade").setAttribute("style", `display: none;`);
 		document.querySelector(".selected").classList.remove("selected");
-		postData("set_pieces", readBoard()).then();
+		postData("set_pieces", readBoard()).then(d => {
+			myTurn = false;
+			console.log(d);
+			cur_repeater = setInterval(() => {
+				getData("setup_state", {player:color, id:game_id}).then(data => {
+					if (data.ready) {
+						console.log("Your turn again");
+						clearInterval(cur_repeater);
+						cur_repeater = undefined;
+						myTurn = true;
+					}
+				});
+			}, 500);
+		});
 	}
 }
 const readBoard = function() {
 	const out = {
 		id: game_id,
 		player: color,
-		"a1": document.querySelector("#row1 [data-col='a']").getAttribute("data-piece"),
 	}
 	const rows = ["1", "2"];
 	const cols = ["a", "b", "c", "d", "e", "f"];
@@ -90,11 +103,7 @@ const readBoard = function() {
 			out[c+r] = document.querySelector(`#row${r} [data-col="${c}"]`).getAttribute("data-piece");
 		});
 	});
-	console.log(out);
 	return out;
-}
-const wait_for_response = function() {
-
 }
 
 const upgrade_click = function(elem) {

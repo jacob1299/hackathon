@@ -24,7 +24,7 @@ def gamestatus():
 		result[game] =  "Running, " + Game.getGameBoard(game).turn
 	return result
 
-@app.route('/make_game', methods = ['POST'])
+@app.route('/make_game', methods = ['GET', 'POST'])
 def makegame():
 	g = Game(request.args.get("color"), request.args.get("ante"), request.args.get("user"))
 	return {"link" : g.get_link()}
