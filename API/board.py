@@ -4,6 +4,7 @@ from constants import *
 class Board:
 	def __init__(self):
 		self.turn = "white"
+		self.state = DRAFT
 		self.b = {s:None for s in SQUARES}
 		for c in "abcdef":	#Add Ants
 			self.b[c+"2"] = Ant("white")
@@ -43,7 +44,24 @@ class Board:
 				self.b[square].generate_moves(moves, square, square_types)
 		return moves
 
+	def make_move(self, origin: str, destination: str) -> bool:
+		if self.state != PLAYING:
+			raise NotImplementedError
+		if {'from' : origin, 'to' : destination} in self.get_moves():
+			moving_piece_type = type(self.b[origin])
+			if isinstance(moving_piece_type, Monkey):
+				self.b[destination], self.b[origin] = self.b[origin], self.b[destination]
+			elif isinstance(moving_piece_type, Bee):
+				self.b[destination], self.b[origin] = None, None
+			else:
+				self.b[destination], self.b[origin] = self.b[origin], None
+			return True
+		else:
+			return False
+
 	def set_pieces(self, data: dict[str: str], color: str):
+		if self.state != DRAFT:
+			raise NotImplementedError
 		columns = range(1,3) if color == "white" else range(5,7)
 		for num in columns:
 			for letter in "abcedf":

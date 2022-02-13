@@ -15,8 +15,8 @@ def game():
 @app.route("/games_status")
 def gamestatus():
 	result = dict()
-	for game, board in Game.games.items():
-		result[game] = "Running"
+	for game in Game.games.keys():
+		result[game] = Game.getGameBoard(game).state + ", " + Game.getGameBoard(game).turn
 	return result
 
 @app.route('/make_game', methods = ['GET'])
