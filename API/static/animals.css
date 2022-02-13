@@ -1,0 +1,84 @@
+.square[data-piece="white-ant"] {
+	background-image: url("white_ant.png");
+}
+.square[data-piece="white-squirrel"] {
+	background-image: url("white_squirrel.png");
+}
+.square[data-piece="white-swan"] {
+	background-image: url("white_swan.png");
+}
+.square[data-piece="white-turtle"] {
+	background-image: url("white_turtle.png");
+}
+.square[data-piece="white-monkey"] {
+	background-image: url("white_monkey.png");
+}
+.square[data-piece="white-lion"] {
+	background-image: url("white_lion.png");
+}
+.square[data-piece="white-bee"] {
+	background-image: url("white_bee.png");
+}
+.square[data-piece="white-fox"] {
+	background-image: url("white_fox.png");
+}
+.square[data-piece="white-tiger"] {
+	background-image: url("white_tiger.png");
+}
+.square[data-piece="white-rabbit"] {
+	background-image: url("white_rabbit.png");
+}
+.square[data-piece="white-hyena"] {
+	background-image: url("white_hyena.png");
+}
+.square[data-piece="white-mouse"] {
+	background-image: url("white_mouse.png");
+}
+.square[data-piece="white-shark"] {
+	background-image: url("white_shark.png");
+}
+.square[data-piece="white-kangaroo"] {
+	background-image: url("white_kangaroo.png");
+}
+.square[data-piece="black-ant"] {
+	background-image: url("black_ant.png");
+}
+.square[data-piece="black-squirrel"] {
+	background-image: url("black_squirrel.png");
+}
+.square[data-piece="black-swan"] {
+	background-image: url("black_swan.png");
+}
+.square[data-piece="black-turtle"] {
+	background-image: url("black_turtle.png");
+}
+.square[data-piece="black-monkey"] {
+	background-image: url("black_monkey.png");
+}
+.square[data-piece="black-lion"] {
+	background-image: url("black_lion.png");
+}
+.square[data-piece="black-bee"] {
+	background-image: url("black_bee.png");
+}
+.square[data-piece="black-fox"] {
+	background-image: url("black_fox.png");
+}
+.square[data-piece="black-tiger"] {
+	background-image: url("black_tiger.png");
+}
+.square[data-piece="black-rabbit"] {
+	background-image: url("black_rabbit.png");
+}
+.square[data-piece="black-hyena"] {
+	background-image: url("black_hyena.png");
+}
+.square[data-piece="black-mouse"] {
+	background-image: url("black_mouse.png");
+}
+.square[data-piece="black-shark"] {
+	background-image: url("black_shark.png");
+}
+.square[data-piece="black-kangaroo"] {
+	background-image: url("black_kangaroo.png");
+}
