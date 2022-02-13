@@ -59,8 +59,10 @@ async function postData(endpoint, data) {
 
 let cur_selected = undefined;
 let backrank = undefined;
+let myTurn = color === "white";
 let remaining_upgrades = 6;
-let remaining_actions  = 4;
+let remaining_actions  = myTurn ? 4 : 0;
+
 const select = function(elem) {
 	if (cur_selected)
 		cur_selected.classList.remove("selected");
@@ -80,7 +82,7 @@ const wait_for_response = function() {
 }
 
 const upgrade_click = function(elem) {
-	if (remaining_actions > 0) {
+	if (remaining_actions > 0 && remaining_upgrades > 0) {
 		select(elem);
 		backrank.forEach(e => e.classList.remove("highlight"));
 		if (upgradeLookup[elem.getAttribute("data-piece")])
@@ -91,7 +93,8 @@ const upgrade_click = function(elem) {
 }
 const upgrade = function() {
 	cur_selected.setAttribute("data-piece", upgradeLookup[cur_selected.getAttribute("data-piece")]);
-	if (!upgradeLookup[cur_selected.getAttribute("data-piece")])
+	remaining_upgrades -= 1;
+	if (!upgradeLookup[cur_selected.getAttribute("data-piece")] || remaining_upgrades === 0)
 		document.querySelector("#upgrade").setAttribute("style", `display: none;`);
 	action();
 }
@@ -105,6 +108,7 @@ const unplaced_piece_click = function(elem) {
 const empty_square_click = function(elem) {
 	if (cur_selected && cur_selected.parentElement.classList.contains("piece-pane")) {
 		elem.setAttribute("data-piece", cur_selected.getAttribute("data-piece"));
+		elem.setAttribute("onclick", "upgrade_click(this);")
 		cur_selected.remove();
 		cur_selected = undefined;
 		backrank.forEach(e => e.classList.remove("highlight"));

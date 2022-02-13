@@ -13,7 +13,7 @@ def hello():
 
 @app.route("/game")
 def game():
-	return render_template("main.html", color="black", id=request.args.get("id"))
+	return render_template("main.html", color="white", id=request.args.get("id"))
 
 @app.route("/games_status")
 def gamestatus():
