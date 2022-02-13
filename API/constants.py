@@ -6,7 +6,3 @@ SQUARES = [c+r for c in "abcdef" for r in "123456"]
 COLORS = ["RED", "BLUE", "GREEN", "BLACK", "WHITE"]
 PLACES = ["FOREST", "BEACH", "HILL", "MEADOW", "LAKE"]
 
-# states for boards
-DRAFT = "DRAFT"
-PLAYING = "PLAYING"
-FINISHED = "FINISHED"

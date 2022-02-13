@@ -19,7 +19,7 @@ def game():
 def gamestatus():
 	result = dict()
 	for game in Game.games.keys():
-		result[game] = Game.getGameBoard(game).state + ", " + Game.getGameBoard(game).turn
+		result[game] =  "Running, " + Game.getGameBoard(game).turn
 	return result
 
 @app.route('/make_game', methods = ['POST'])
@@ -36,6 +36,24 @@ def setup_state():
 	curr_board = Game.getGameBoard(id)
 	result = "True" if curr_board.turn == player else "False"
 	return {"ready":result}
+
+@app.route('/move', methods=['POST'])
+def make_move():
+	data = dict(request.values)
+	if len(data) != 3:
+		return {"Success": "False"}
+
+	id = data['id']
+	origin, dest = data['from'], data['to']
+	curr_board = Game.getGameBoard(id)
+
+	success = curr_board.make_move(origin, dest)
+	if (success):
+		curr_board.swap_turns()
+		return curr_board.for_json()
+	else:
+		return {"Success": "False, cannot move"}
+		
 
 
 @app.route('/set_pieces', methods = ['POST'])
