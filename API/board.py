@@ -32,7 +32,7 @@ class Board:
 		}
 		moves = []
 		for square in SQUARES:
-			if self.b[square] is not None:
+			if self.b[square] is not None and self.b[square].color == self.turn:
 				self.b[square].generate_moves(moves, square, square_types)
 		return moves
 
