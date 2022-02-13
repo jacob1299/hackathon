@@ -5,72 +5,63 @@
 		html {
 			background-color: #87c7cd;
 		}
+		#game {
+			display: flex;
+			flex-direction: row;
+		}
+		#info {
+			display: flex;
+			flex-direction: column;
+		}
 		.row {
 			display: flex;
 			flex-direction: row;
 		}
 		.square {
+			box-sizing: border-box;
 			height: 64px;
 			width: 64px;
+			background-repeat: no-repeat;
+			background-position: center;
+  			background-size: 56px;
 		}
-		.square {
+		.square.selected, .square.highlight {
+			border: 4px solid yellow;
+		}
+		.square.highlight.capture {
+			border-color: red;
+		}
+		#board .square {
 			background-color: #a05824;
 		}
 		#row6 > :nth-child(odd), #row4 > :nth-child(odd), #row2 > :nth-child(odd),
 		#row5 > :nth-child(even), #row3 > :nth-child(even), #row1 > :nth-child(even) {
 			background-color: #415d2e;
 		}
+		.piece-pane {
+			width: 400px;
+			height: 100px;
+			background-color: lightgray;
+			display: flex;
+			flex-direction: row;
+		}
 	</style>
+	<link rel="stylesheet" href="static/animals.css">
+	<script>
+		color = "{{color}}";
+	</script>
+	<script src="static/main.js"></script>
 </head>
-<body>
-	<div id="board">
-		<div id="row6" class="row">
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-		</div>
-		<div id="row5" class="row">
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-		</div>
-		<div id="row4" class="row">
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-		</div>
-		<div id="row3" class="row">
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-		</div>
-		<div id="row2" class="row">
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-		</div>
-		<div id="row1" class="row">
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
-			<div class="square"></div>
+<body onload="render();">
+	<div id="game">
+		<div id="board"></div>
+		<div id="info">
+			<div id="enemy">
+				<div class="piece-pane"></div>
+			</div>
+			<div id="self">
+				<div class="piece-pane"></div>
+			</div>
 		</div>
 	</div>
 </body>

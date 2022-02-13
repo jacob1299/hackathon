@@ -1,8 +1,11 @@
 from flask import Flask, request, render_template
 from board import Board
 from game import Game
+from flask_cors import CORS
+
 
 app = Flask("")
+CORS(app)
 
 @app.route("/hello")
 def hello():
@@ -10,7 +13,7 @@ def hello():
 
 @app.route("/game")
 def game():
-	return render_template("main.html")
+	return render_template("main.html", color="black")
 
 @app.route("/games_status")
 def gamestatus():
