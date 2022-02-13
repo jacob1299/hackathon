@@ -61,6 +61,9 @@ const action = function(elem) {
 		document.querySelector(".selected").classList.remove("selected");
 	}
 }
+const wait_for_response = function() {
+
+}
 
 const upgrade_click = function(elem) {
 	if (remaining_actions > 0) {
@@ -68,6 +71,8 @@ const upgrade_click = function(elem) {
 		backrank.forEach(e => e.classList.remove("highlight"));
 		if (upgradeLookup[elem.getAttribute("data-piece")])
 			document.querySelector("#upgrade").setAttribute("style", `position: absolute; top: ${elem.getBoundingClientRect().top}px; left: ${elem.getBoundingClientRect().left}px;`);
+		else
+			document.querySelector("#upgrade").setAttribute("display: none;");
 	}
 }
 const upgrade = function() {
