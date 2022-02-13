@@ -131,49 +131,50 @@ class Lion(Piece):
 		self.deltas  = [(UP, 2), (DOWN,2), (LEFT, 2), (RIGHT, 2), (UPRIGHT, 2), (DOWNLEFT,2), (UPLEFT, 2), (DOWNRIGHT, 2)]
 
 class Bee(Piece):
-    def init(self, color):
-        super().init("Bee", color)
+    def __init__(self, color):
+        super().__init__("Bee", color)
         self.targets = []
         self.deltas = [(UP, 10), (DOWN, 10), (LEFT, 10), (RIGHT, 10)]
 
 class Fox(Piece):
-    def init(self, color):
-        super().init("Fox", color)
+    def __init__(self, color):
+        super().__init__("Fox", color)
         self.targets = []
         self.deltas = [(UP, 10), (DOWN, 10), (LEFT, 10), (RIGHT, 10)]
 
 class Tiger(Piece):
-    def init(self, color):
-        super().init("Tiger", color)
+    def __init__(self, color):
+        super().__init__("Tiger", color)
         self.targets = []
         self.deltas = [(UP, 10), (DOWN, 10), (LEFT, 10), (RIGHT, 10), (UPRIGHT, 10), (DOWNLEFT,10), (UPLEFT, 10), (DOWNRIGHT, 10)]
+
 class Rabbit(Piece):
-    def init(self, color):
-        super().init("Rabbit", color)
+    def __init__(self, color):
+        super().__init__("Rabbit", color)
         self.targets = []
         self.deltas = [(UPRIGHT, 2), (DOWNLEFT, 2), (UPLEFT, 2), (DOWNRIGHT, 2)]
 
 class Hyena(Piece):
-    def init(self, color):
-        super().init("Hyena", color)
+    def __init__(self, color):
+        super().__init__("Hyena", color)
         self.targets = []
         self.deltas = [(UPRIGHT, 10), (DOWNLEFT, 10), (UPLEFT, 10), (DOWNRIGHT, 10)]
 
 class Mouse(Piece):
-    def init(self, color):
-        super().init("Mouse", color)
+    def __init__(self, color):
+        super().__init__("Mouse", color)
         self.targets = []
         self.deltas = [(UP2, EMPTY | ENEMY), (DOWN2, EMPTY | ENEMY), (LEFT2, EMPTY | ENEMY), (RIGHT2, EMPTY | ENEMY), (UPRIGHT2, EMPTY | ENEMY), (UPLEFT2, EMPTY | ENEMY), (DOWNRIGHT2, EMPTY | ENEMY), (DOWNLEFT2, EMPTY | ENEMY)]
 
 class Shark(Piece):
-    def init(self, color):
-        super().init("Shark", color)
+    def __init__(self, color):
+        super().__init__("Shark", color)
         self.targets = [(UUR, EMPTY | ENEMY), (UUL, EMPTY | ENEMY), (URR, EMPTY | ENEMY), (ULL, EMPTY | ENEMY), (DDR, EMPTY | ENEMY), (DDL, EMPTY | ENEMY), (DRR, EMPTY | ENEMY), (DLL, EMPTY | ENEMY)]
         self.deltas = []
 
 class Kangaroo(Piece):
-    def init(self, color):
-        super().init("Kangaroo", color)
+    def __init__(self, color):
+        super().__init__("Kangaroo", color)
         self.targets = [(UP, EMPTY | ENEMY),(DOWN, EMPTY | ENEMY),(LEFT, EMPTY | ENEMY),(RIGHT, EMPTY | ENEMY), 
             (UPLEFT, EMPTY | ENEMY),(DOWNLEFT, EMPTY | ENEMY),(UPRIGHT, EMPTY | ENEMY),(DOWNRIGHT, EMPTY | ENEMY),
             (UUR, EMPTY | ENEMY), (UUL, EMPTY | ENEMY), (URR, EMPTY | ENEMY), (ULL, EMPTY | ENEMY), (DDR, EMPTY | ENEMY), (DDL, EMPTY | ENEMY), (DRR, EMPTY | ENEMY), (DLL, EMPTY | ENEMY)]

@@ -77,8 +77,69 @@ class TestPieces(unittest.TestCase):
 		board.b["b4"] = Ant("black")
 		self.assertEqual(len(board.get_moves()), 2)
 
+	def test_bee(self):
+		# board = self.board
+		# board.b["b2"] = Squirrel("white") #one forward, one take
+		# board.b["c3"] = Ant("black") 
+		# board.b["b4"] = Ant("black")
+		# self.assertEqual(len(board.get_moves()), 2)
+		board = self.board
+		board.b["c4"] = Bee("white")
+		board.b["c5"] = Bee("white")
+		self.assertEqual(len(board.get_moves()), 14)
+
+	def test_fox(self):
+		board = self.board
+		board.b["c4"] = Fox("white")
+		board.b["c5"] = Fox("black")
+		self.assertEqual(len(board.get_moves()),9)
+
+	def test_tiger(self):
+		board = self.board
+		board.b["c4"] = Tiger("white")
+		board.b["c5"] = Tiger("black")
+		self.assertEqual(len(board.get_moves()), 18)
+
+	def test_rabbit(self):
+		board = self.board
+		board.b["b5"] = Rabbit("white")
+		board.b["a6"] = Rabbit("white")
+		#print (len(board.get_moves()))
+		self.assertEqual(len(board.get_moves()), 4)
+
+	def test_hyena(self):
+		board = self.board
+		board.b["d3"] = Hyena("white")
+		board.b["a6"] = Hyena("white")
+		board.b["c2"] = Ant("black")
+		self.assertEqual(len(board.get_moves()), 9)
+
+	def test_mouse(self):
+		board = self.board
+		board.b["d3"] = Mouse("white")
+		board.b["e4"] = Mouse("white")
+		board.b["c2"] = Ant("black")
+		self.assertEqual(len(board.get_moves()), 14)
+
+	def test_shark(self):
+		board = self.board
+		board.b["a1"] = Shark("white")
+		board.b["a6"] = Shark("white")
+		board.b["c2"] = Ant("white")
+		board.b["c3"] = Ant("black")
+		#print (len(board.get_moves()))
+		self.assertEqual(len(board.get_moves()), 3)
+
+	def test_kangaroo(self):
+		board = self.board
+		board.b["a1"] = Kangaroo("white")
+		board.b["a6"] = Kangaroo("white")
+		board.b["c2"] = Ant("white")
+		board.b["c3"] = Ant("black")
+		self.assertEqual(len(board.get_moves()), 9)
+
 
 if __name__ == '__main__':
-    unittest.main()
+	unittest.main()
 # else:
 # 	raise ValueError("Test file was imported.  That is bad.")
