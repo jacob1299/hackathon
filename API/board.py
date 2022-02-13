@@ -49,9 +49,9 @@ class Board:
 			raise NotImplementedError
 		if {'from' : origin, 'to' : destination} in self.get_moves():
 			moving_piece_type = type(self.b[origin])
-			if isinstance(moving_piece_type, Monkey):
+			if moving_piece_type == Monkey and self.b[destination] and self.b[destination].color == self.b[origin].color:
 				self.b[destination], self.b[origin] = self.b[origin], self.b[destination]
-			elif isinstance(moving_piece_type, Bee):
+			elif moving_piece_type == Bee and self.b[destination]:
 				self.b[destination], self.b[origin] = None, None
 			else:
 				self.b[destination], self.b[origin] = self.b[origin], None
