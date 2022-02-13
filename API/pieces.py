@@ -205,7 +205,7 @@ class Kangaroo(Piece):
 def parseName(name: str):
 	return {
 		'ant' : Ant,
-		'squrrel' : Squirrel,
+		'squirrel' : Squirrel,
 		'swan' : Swan,
 		'turtle' : Turtle,
 		'monkey' : Monkey,

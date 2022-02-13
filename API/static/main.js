@@ -225,8 +225,9 @@ const gameClick = function(elem) {
 			postData("move", {
 				id: game_id,
 				from: get_coords(cur_selected),
-				to: get_cords(elem),
+				to: get_coords(elem),
 			}).then(data => {
+				update_board(data);
 				moves = undefined;
 				myTurn = false;
 				cur_selected.classList.remove("selected");
@@ -237,6 +238,7 @@ const gameClick = function(elem) {
 		}
 		else if (elem.getAttribute("data-piece").includes(color)) {	//select piece
 			select(elem);
+			remove_highlights();
 			highlight_moves(elem);
 		}
 	}
