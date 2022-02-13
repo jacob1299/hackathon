@@ -55,6 +55,16 @@ class TestMovePieces(unittest.TestCase):
 		self.assertEqual(type(self.board.b['a3']),Bee)
 
 
+class EmergencyTests(unittest.TestCase):
+	def setUp(self):
+		self.board = clean_board()
+		self.board.b["a1"] = Rabbit("white")
+		self.board.b["b2"] = Ant("white")
+
+	def test_rabbit(self):
+		print(self.board.get_moves())
+		self.assertEqual(len(self.board.get_moves()), 3)
+
 
 class TestPieces(unittest.TestCase):
 	def setUp(self) -> None:

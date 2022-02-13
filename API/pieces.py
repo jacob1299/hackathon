@@ -185,8 +185,8 @@ class Hyena(Piece):
 class Mouse(Piece):
     def __init__(self, color):
         super().__init__("Mouse", color)
-        self.targets = []
-        self.deltas = [(UP2, EMPTY | ENEMY), (DOWN2, EMPTY | ENEMY), (LEFT2, EMPTY | ENEMY), (RIGHT2, EMPTY | ENEMY), (UPRIGHT2, EMPTY | ENEMY), (UPLEFT2, EMPTY | ENEMY), (DOWNRIGHT2, EMPTY | ENEMY), (DOWNLEFT2, EMPTY | ENEMY)]
+        self.targets = [(UP2, EMPTY | ENEMY), (DOWN2, EMPTY | ENEMY), (LEFT2, EMPTY | ENEMY), (RIGHT2, EMPTY | ENEMY), (UPRIGHT2, EMPTY | ENEMY), (UPLEFT2, EMPTY | ENEMY), (DOWNRIGHT2, EMPTY | ENEMY), (DOWNLEFT2, EMPTY | ENEMY)]
+        self.deltas = []
 
 class Shark(Piece):
     def __init__(self, color):
