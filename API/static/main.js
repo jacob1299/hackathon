@@ -46,24 +46,42 @@ const upgradeLookup = {
 };
 let cur_selected = undefined;
 let backrank = undefined;
+let remaining_upgrades = 6;
+let remaining_actions  = 4;
 const select = function(elem) {
 	if (cur_selected)
 		cur_selected.classList.remove("selected");
 	elem.classList.add("selected");
 	cur_selected = elem;
 }
+const action = function(elem) {
+	remaining_actions -= 1;
+	if (remaining_actions === 0) {
+		document.querySelector("#upgrade").setAttribute("style", `display: none;`);
+		document.querySelector(".selected").classList.remove("selected");
+	}
+}
+
 const upgrade_click = function(elem) {
-	select(elem);
-	backrank.forEach(e => e.classList.remove("highlight"));
-	if (upgradeLookup[elem.getAttribute("data-piece")])
-		document.querySelector("#upgrade").setAttribute("style", `position: absolute; top: ${elem.getBoundingClientRect().top}px; left: ${elem.getBoundingClientRect().left}px;`);
+	if (remaining_actions > 0) {
+		select(elem);
+		backrank.forEach(e => e.classList.remove("highlight"));
+		if (upgradeLookup[elem.getAttribute("data-piece")])
+			document.querySelector("#upgrade").setAttribute("style", `position: absolute; top: ${elem.getBoundingClientRect().top}px; left: ${elem.getBoundingClientRect().left}px;`);
+	}
 }
 const upgrade = function() {
 	cur_selected.setAttribute("data-piece", upgradeLookup[cur_selected.getAttribute("data-piece")]);
+	if (!upgradeLookup[cur_selected.getAttribute("data-piece")])
+		document.querySelector("#upgrade").setAttribute("style", `display: none;`);
+	action();
 }
 const unplaced_piece_click = function(elem) {
-	select(elem);
-	backrank.forEach(e => e.getAttribute("data-piece") || e.classList.add("highlight"));
+	if (remaining_actions > 0) {
+		document.querySelector("#upgrade").setAttribute("style", `display: none;`);
+		select(elem);
+		backrank.forEach(e => e.getAttribute("data-piece") || e.classList.add("highlight"));
+	}
 }
 const empty_square_click = function(elem) {
 	if (cur_selected && cur_selected.parentElement.classList.contains("piece-pane")) {
@@ -71,5 +89,6 @@ const empty_square_click = function(elem) {
 		cur_selected.remove();
 		cur_selected = undefined;
 		backrank.forEach(e => e.classList.remove("highlight"));
+		action();
 	}
 }

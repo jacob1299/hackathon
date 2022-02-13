@@ -27,11 +27,11 @@ def makegame():
 	g = Game()
 	return {"id" : g.name}
 
-@app.route('/setup_state', methods = ['POST'])
+@app.route('/setup_state', methods = ['GET'])
 def setup_state():
 	data = dict(request.values)
 	if len(data) != 2:
-		return {"Success", "False"}
+		return {"Success": "False"}
 	id, player = data['id'], data['player']
 	curr_board = Game.getGameBoard(id)
 	result = "True" if curr_board.turn == player else "False"
