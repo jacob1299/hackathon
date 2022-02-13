@@ -20,7 +20,6 @@ class TestMoveArounds(unittest.TestCase):
 class TestMovePieces(unittest.TestCase):
 	def setUp(self) -> None:
 		self.board = Board()
-		self.board.state = PLAYING
 
 	def test_ant_move(self):
 		self.board.make_move('a2', 'a3')
@@ -139,6 +138,11 @@ class TestPieces(unittest.TestCase):
 		board.b["c3"] = Ant("black") 
 		board.b["b4"] = Ant("black")
 		self.assertEqual(len(board.get_moves()), 2)
+
+	def test_squirrel5(self):
+		board = self.board
+		board.b["b3"] = Squirrel("white") #one forward
+		self.assertEqual(len(board.get_moves()), 1)
 
 	def test_bee(self):
 		board = self.board
