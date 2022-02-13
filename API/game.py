@@ -16,6 +16,7 @@ class Game:
 		instr = rand_name()
 		# makes sure that name is unique
 		while instr in Game.games:
+			print("new name")
 			instr = rand_name()
 
 		self.id = instr
