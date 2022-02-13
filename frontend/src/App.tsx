@@ -11,20 +11,19 @@ import {
   Center, 
   Flex
 } from "@chakra-ui/react"
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { Logo } from "./Logo"
 import { LoginButton } from './components/LoginButton'
-import { LogoutButton } from './components/LogoutButton'
+import { Nav } from './components/Nav'
 import { Routes, Route } from 'react-router-dom'
 import { MainPage } from './pages/MainPage'
 
+
 export const App = () => (
     <ChakraProvider theme={theme}>
+      <Nav />
       <Flex h='100vh' w='100vw'>
         <Center bg='green.400' h='100%' color='white' w='full'>
-          <LoginButton mr={12}/>
-          <LogoutButton />
           <Routes>
+            <Route path="/" element={<LoginButton />} />
             <Route path="/main" element={<MainPage />} />
           </Routes>
         </Center>
