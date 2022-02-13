@@ -1,7 +1,9 @@
 from flask import Flask, request, render_template
 from board import Board
+from flask_cors import CORS
 
 app = Flask("")
+CORS(app)
 
 @app.route("/hello")
 def hello():
