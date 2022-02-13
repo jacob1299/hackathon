@@ -66,7 +66,9 @@ async function getData(endpoint, data) {
 	return response.json();
 }
 async function postData(endpoint, data) {
-	const response = await fetch(`http://34.75.42.233:5000/${endpoint}?${Object.keys(data).map(k => `${k}=${data[k]}`).join("&")}`, {
+	const url = `http://34.75.42.233:5000/${endpoint}?${Object.keys(data).map(k => `${k}=${data[k]}`).join("&")}`;
+	console.log(url);
+	const response = await fetch(url, {
 		method: "POST",
 	});
 	return response.json();
