@@ -21,6 +21,29 @@ const render = function() {
 	document.querySelector("#self > .piece-pane").innerHTML = toPlaceHTML.replaceAll("%color%", color).replaceAll("%onclick%", "unplaced_piece_click(this);");
 	document.querySelector("#enemy > .piece-pane").innerHTML = toPlaceHTML.replaceAll("%color%", color === "white" ? "black" : "white").replaceAll("%onclick%", "");
 }
+
+const upgradeLookup = {
+	"black-ant": "black-squirrel",
+	"black-squirrel": "black-swan",
+	"black-turtle": "black-monkey",
+	"black-monkey": "black-lion",
+	"black-bee": "black-fox",
+	"black-fox": "black-tiger",
+	"black-rabbit": "black-hyena",
+	"black-hyena": "black-tiger",
+	"black-mouse": "black-shark",
+	"black-shark": "black-kangaroo",
+	"white-ant": "white-squirrel",
+	"white-squirrel": "white-swan",
+	"white-turtle": "white-monkey",
+	"white-monkey": "white-lion",
+	"white-bee": "white-fox",
+	"white-fox": "white-tiger",
+	"white-rabbit": "white-hyena",
+	"white-hyena": "white-tiger",
+	"white-mouse": "white-shark",
+	"white-shark": "white-kangaroo",
+};
 let cur_selected = undefined;
 let backrank = undefined;
 const select = function(elem) {
@@ -31,9 +54,12 @@ const select = function(elem) {
 }
 const upgrade_click = function(elem) {
 	select(elem);
-	document.querySelectorAll(`#row${color==="white" ? "1" : "6"} > .square`).forEach(e => {
-		e.classList.remove("highlight");
-	});
+	backrank.forEach(e => e.classList.remove("highlight"));
+	if (upgradeLookup[elem.getAttribute("data-piece")])
+		document.querySelector("#upgrade").setAttribute("style", `position: absolute; top: ${elem.getBoundingClientRect().top}px; left: ${elem.getBoundingClientRect().left}px;`);
+}
+const upgrade = function() {
+	cur_selected.setAttribute("data-piece", upgradeLookup[cur_selected.getAttribute("data-piece")]);
 }
 const unplaced_piece_click = function(elem) {
 	select(elem);
