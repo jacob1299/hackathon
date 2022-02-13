@@ -44,17 +44,17 @@ const upgradeLookup = {
 	"white-mouse": "white-shark",
 	"white-shark": "white-kangaroo",
 };
-async function gettData(endpoint, data, callback) {
+async function getData(endpoint, data) {
 	const response = await fetch(`http://ecochess.tech:5000/${endpoint}?${Object.keys(data).map(k => `${k}=${data[k]}`).join("&")}`, {
 		method: "GET",
 	});
-	callback(response.json());
+	return response.json();
 }
-async function postData(endpoint, data, callback) {
+async function postData(endpoint, data) {
 	const response = await fetch(`http://ecochess.tech:5000/${endpoint}?${Object.keys(data).map(k => `${k}=${data[k]}`).join("&")}`, {
 		method: "POST",
 	});
-	callback(response.json());
+	return response.json();
 }
 
 let cur_selected = undefined;
