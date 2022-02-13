@@ -44,6 +44,13 @@ const upgradeLookup = {
 	"white-mouse": "white-shark",
 	"white-shark": "white-kangaroo",
 };
+async function postData(endpoint, data, callback) {
+	const response = await fetch(`ecochess.tech:5000/${endpoint}?${Object.keys(data).map(k => `${k}=${data[k]}`).join("&")}`, {
+		method: "POST",
+	});
+	return response.json();
+}
+
 let cur_selected = undefined;
 let backrank = undefined;
 let remaining_upgrades = 6;
@@ -59,6 +66,7 @@ const action = function(elem) {
 	if (remaining_actions === 0) {
 		document.querySelector("#upgrade").setAttribute("style", `display: none;`);
 		document.querySelector(".selected").classList.remove("selected");
+
 	}
 }
 const wait_for_response = function() {
