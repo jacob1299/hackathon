@@ -72,7 +72,7 @@ const upgrade_click = function(elem) {
 		if (upgradeLookup[elem.getAttribute("data-piece")])
 			document.querySelector("#upgrade").setAttribute("style", `position: absolute; top: ${elem.getBoundingClientRect().top}px; left: ${elem.getBoundingClientRect().left}px;`);
 		else
-			document.querySelector("#upgrade").setAttribute("display: none;");
+			document.querySelector("#upgrade").setAttribute("style", "display: none;");
 	}
 }
 const upgrade = function() {
