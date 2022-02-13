@@ -13,7 +13,7 @@ def hello():
 
 @app.route("/game")
 def game():
-	print(f"A: {request.args.get('not there')}")
+	print(f"A: {request.args.get('id')}")
 	print(f"B: {request.url}")
 	print(f"B: {request.args.url}")
 	g = Game("white", "none", "david") if request.args.get("id") == "test" else Game.games[request.args.get("id")]
