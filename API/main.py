@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 from board import Board
 
 app = Flask("")
@@ -13,4 +13,8 @@ def board():
 	b.make_default_board()
 	return(str(b))
 
-app.run(host='0.0.0.0', port=8080)
+@app.route("/game")
+def game():
+	return render_template("main.html")
+
+app.run(host='0.0.0.0')
