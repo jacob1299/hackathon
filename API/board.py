@@ -15,6 +15,13 @@ class Board:
 			str_line = [str(animal) for animal in line]
 			out += '|' + '|'.join(str_line) + '|\n'
 		return out
+	
+	def for_json(self):
+		out = dict()
+		for position, piece in self.b.items():
+			out[position] = str(piece) if piece else ""
+		return out
+			
 
 	def get_moves(self):
 		blank_squares = {s for s in SQUARES if self.b[s] is None}
@@ -36,17 +43,15 @@ class Board:
 				self.b[square].generate_moves(moves, square, square_types)
 		return moves
 
-def main():
-	b = Board()
-	b.make_default_board()
-	print(b)
-
-	origin = [0,1]
-	moves = b.get_moves(origin)
-	print(moves)
-	b.make_move(origin, moves[0])
-	print(b)
-
-
-if __name__ == "__main__":
-	main()
+	def set_pieces(self, data: dict[str: str], color: str):
+		columns = range(1,3) if color == "white" else range(5,7)
+		for num in columns:
+			for letter in "abcedf":
+				pos = letter + str(num)
+				if data[pos] == '':
+					self.b[pos] = None
+				else:
+					self.b[pos] = parseName(data[pos])(color)
+	
+	def swap_turns(self):
+		self.turn = "white" if self.turn == "black" else "black"
