@@ -43,8 +43,12 @@ def setup_state():
 		return {"Success": "False"}
 	id, player = data['id'], data['player']
 	curr_board = Game.getGameBoard(id)
-	result = "True" if curr_board.turn == player else "False"
-	return {"ready":result}
+	if curr_board.turn == player:
+		out = curr_board.for_json()
+		out["ready"] = "True"
+		return out
+	else:
+		return {"ready":"False"}
 
 @app.route('/board', methods=['GET'])
 def getboard():
