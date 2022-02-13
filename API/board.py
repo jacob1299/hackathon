@@ -28,36 +28,13 @@ class Board:
 			EMPTY | ALLY: blank_squares.union(ally_squares),
 			EMPTY | ENEMY: blank_squares.union(enemy_squares),
 			ALLY | ENEMY: ally_squares.union(enemy_squares),
-			EMPTY | ALLY | ENEMY: ally_squares.union(enemy_squares).union(empty_squares)
+			EMPTY | ALLY | ENEMY: ally_squares.union(enemy_squares).union(blank_squares)
 		}
 		moves = []
 		for square in SQUARES:
 			if self.b[square] is not None:
 				self.b[square].generate_moves(moves, square, square_types)
 		return moves
-
-	def make_move(self, origin: list[int], destination) -> bool:
-		if (destination in self.get_moves(origin)):
-			y0,x0 = origin
-			y1,x1 = destination
-			self.b[x1][y1] = self.b[x0][y0] 
-			self.b[x0][y0] = None
-			return True
-		else:
-			print("INVALID MOVE")
-			return False
-		
-		
-	def make_default_board(self):
-		S = pieces.Squirrel
-		L = pieces.Lion
-		edge_row = [S(), S(), S(), L(), S(), S()]
-		second_row = [S(), S(), S(), S(), S(), S()]
-		self.make_white_side(edge_row, second_row)
-		
-		edge_row2 = [S(), S(), S(), L(), S(), S()]
-		second_row2 = [S(), S(), S(), S(), S(), S()]
-		self.make_black_side(edge_row2, second_row2)
 
 def main():
 	b = Board()

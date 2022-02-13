@@ -31,7 +31,7 @@ class Piece:
 	def generate_moves(self, moves, current_square, squares):
 		for target in self.targets:	#target = [function, square_type]
 			if target[0](current_square) in squares[target[1]]:
-				moves.append(MOVE(current_square, target_square))
+				moves.append(MOVE(current_square, target[0](current_square)))
 		for delta in self.deltas:	#delta = [function, limit]
 			sqr = delta[0](current_square)
 			i=1
@@ -48,7 +48,7 @@ class Piece:
 
 class Ant(Piece):
 	def __init__(self, color):
-		super.__init__("Ant", color)
+		super().__init__("Ant", color)
 		self.targets = [(UP if color == "white" else DOWN, EMPTY), (UPLEFT if color == "white" else DOWNLEFT, ENEMY), (UPRIGHT if color == "white" else DOWNRIGHT, ENEMY)]
 		self.deltas  = []
 
