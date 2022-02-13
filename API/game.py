@@ -26,4 +26,6 @@ class Game:
 		Game.games[self.id] = self
 
 	def get_link(self):
-		return f"34.75.42.233:5000/game?id={self.id}"
+		MATTY_IP = "172.19.49.145"
+		GCLOUD_IP = "34.75.42.233"
+		return f"{MATTY_IP}:5000/game?id={self.id}"

@@ -4,7 +4,7 @@ from game import Game
 from flask_cors import CORS
 
 
-app = Flask("")
+app = Flask(__name__, template_folder='./templates')
 CORS(app)
 
 @app.route("/hello")
@@ -13,12 +13,12 @@ def hello():
 
 @app.route("/game")
 def game():
-	try:
-		g = Game.games[request.args.get("id")]
-		isWhite = (request.args.get("user") and g.players[0]) or (not request.args.get("user") and not g.players[0])
-		return render_template("main.html", color="white" if isWhite else "black", id=request.args.get("id"))
-	except:
-		return {"bad_id": request.args.get("id")}
+	# try:
+	g = Game.games[request.args.get("id")]
+	isWhite = (request.args.get("user") and g.players[0]) or (not request.args.get("user") and not g.players[0])
+	return render_template("main.html", color="white" if isWhite else "black", id=request.args.get("id"))
+	# except e:
+	# 	return {"bad_id": request.args.get("id")}
 
 @app.route("/games_status")
 def gamestatus():
@@ -26,6 +26,10 @@ def gamestatus():
 	for game in Game.games.keys():
 		result[game] =  "Running, " + Game.getGameBoard(game).turn
 	return result
+
+# @app.route('/newgame')
+# def newgame():
+
 
 @app.route('/make_game', methods = ['GET', 'POST'])
 def makegame():
