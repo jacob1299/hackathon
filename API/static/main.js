@@ -22,19 +22,19 @@ const render = function() {
 	document.querySelector("#enemy > .piece-pane").innerHTML = toPlaceHTML.replaceAll("%color%", color === "white" ? "black" : "white").replaceAll("%onclick%", "");
 	if (color === "black") {
 		cur_repeater = setInterval(() => {
-			console.log("pinging backend");
 			getData("setup_state", {player:color, id:game_id}).then(data => {
-				console.log(data.ready)
+				console.log(`My turn: ${data.ready}`)
 				if (data.ready === "True") {
-					console.log("Your turn again");
 					clearInterval(cur_repeater);
 					cur_repeater = undefined;
 					myTurn = true;
+					document.querySelector("#status").innerHTML = "Place/upgrade your pieces";
 					remaining_actions = 8;
 				}
 			});
-		}, 500);
+		}, 1000);
 	}
+	document.querySelector("#status").innerHTML = (color === "white" ? "Place/upgrade your pieces" : "Wait for opponent");
 }
 
 const upgradeLookup = {
@@ -60,13 +60,15 @@ const upgradeLookup = {
 	"white-shark": "white-kangaroo",
 };
 async function getData(endpoint, data) {
-	const response = await fetch(`http://34.75.42.233:5000/${endpoint}?${Object.keys(data).map(k => `${k}=${data[k]}`).join("&")}`, {
+	const response = await fetch(`http://${window.location.hostname}:5000/${endpoint}?${Object.keys(data).map(k => `${k}=${data[k]}`).join("&")}`, {
 		method: "GET",
 	});
 	return response.json();
 }
 async function postData(endpoint, data) {
-	const response = await fetch(`http://34.75.42.233:5000/${endpoint}?${Object.keys(data).map(k => `${k}=${data[k]}`).join("&")}`, {
+	const url = `http://${window.location.hostname}:5000/${endpoint}?${Object.keys(data).map(k => `${k}=${data[k]}`).join("&")}`;
+	console.log(url);
+	const response = await fetch(url, {
 		method: "POST",
 	});
 	return response.json();
@@ -89,33 +91,44 @@ const action = function(elem) {
 	remaining_actions -= 1;
 	if (remaining_actions === 0) {
 		document.querySelector("#upgrade").setAttribute("style", `display: none;`);
-		document.querySelector(".selected").classList.remove("selected");
+		document.querySelectorAll(".selected").forEach(e => e.classList.remove("selected"));	//only one but maybe zero
 		postData("set_pieces", readBoard()).then(d => {
 			myTurn = false;
-			console.log(d);
+			document.querySelector("#status").innerHTML = "Wait for opponent";
 			cur_repeater = setInterval(() => {
 				getData("setup_state", {player:color, id:game_id}).then(data => {
-					if (data.ready) {
-						console.log("Your turn again");
+					console.log(`My turn: ${data.ready}`)
+					if (data.ready === "True") {
 						clearInterval(cur_repeater);
 						cur_repeater = undefined;
 						myTurn = true;
+						if (donePlacing()) {
+							initGame();
+							document.querySelector("#status").innerHTML = "Your move";
+						}
+						else {
+							document.querySelector("#status").innerHTML = "Place/upgrade your pieces";
+							remaining_actions = color === "white" ? 8 : 4;
+						}
 					}
 				});
 			}, 500);
 		});
 	}
 }
+const donePlacing = function() {
+	return remaining_upgrades === 0 && document.querySelector("#self > .piece-pane").childElementCount === 0;
+}
 const readBoard = function() {
 	const out = {
 		id: game_id,
 		player: color,
 	}
-	const rows = ["1", "2"];
+	const rows = color==="white" ? ["1", "2"] : ["5", "6"];
 	const cols = ["a", "b", "c", "d", "e", "f"];
 	rows.forEach(r => {
 		cols.forEach(c => {
-			out[c+r] = document.querySelector(`#row${r} [data-col="${c}"]`).getAttribute("data-piece");
+			out[c+r] = document.querySelector(`#row${r} [data-col="${c}"]`).getAttribute("data-piece").replace(/.{5}-/,"");
 		});
 	});
 	return out;
@@ -154,4 +167,10 @@ const empty_square_click = function(elem) {
 		backrank.forEach(e => e.classList.remove("highlight"));
 		action();
 	}
+}
+
+
+
+const initGame = function() {
+	console.log("game start");
 }
