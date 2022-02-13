@@ -3,7 +3,6 @@ import { Center, Flex, Button, Input, Spacer } from '@chakra-ui/react'
 import axios from 'axios'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useForm } from 'react-hook-form'
-import { Link, Route } from 'react-router-dom'
 
 interface MainPageProps {
     isLoggedIn?: boolean
@@ -11,7 +10,7 @@ interface MainPageProps {
 
 export const MainPage: React.FC<MainPageProps> = ({isLoggedIn}) => {
     const [data, setData] = React.useState<any[]>([])
-    const { isAuthenticated, user } = useAuth0()
+    const { user } = useAuth0()
     const [postReturn, setPostReturn] = useState('Error: There was an issue')
 
     const userEmail = user?.email    

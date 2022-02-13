@@ -8,7 +8,7 @@ interface NavProps {
 }
 
 export const Nav = ({text: NavProps}: NavProps): JSX.Element => {
-    const { isAuthenticated, user } = useAuth0()
+    const { user } = useAuth0()
 
     return (
         <Flex as='header' w='100vw' h='50px' position='fixed'>
