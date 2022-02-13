@@ -24,7 +24,8 @@ const render = function() {
 		cur_repeater = setInterval(() => {
 			console.log("pinging backend");
 			getData("setup_state", {player:color, id:game_id}).then(data => {
-				if (data.ready) {
+				console.log(data.ready)
+				if (data.ready === "True") {
 					console.log("Your turn again");
 					clearInterval(cur_repeater);
 					cur_repeater = undefined;
