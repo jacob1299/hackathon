@@ -26,4 +26,4 @@ class Game:
 		Game.games[self.id] = self
 
 	def get_link(self):
-		return f"34.75.42.233:5000/game&id={self.id}"
+		return f"34.75.42.233:5000/game?id={self.id}"
